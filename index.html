@@ -1,40 +1,96 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>XTRADE Mobile Elite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KineWeb Studio - Pro Editor</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <!-- Meta untuk PWA iOS & Android -->
-    <meta name="theme-color" content="#0a0a0a">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f1015; color: #fff; }
+        .timeline-track { background: linear-gradient(90deg, #1f2937 0%, #111827 100%); }
+    </style>
 </head>
-<body>
-    <div class="app-container">
-        <header class="glass-header">
-            <h1>XTRADE <span class="gold">GOLD</span></h1>
-            <p class="subtitle">AI Powered Dashboard</p>
-        </header>
+<body class="h-screen flex flex-col overflow-hidden">
 
-        <main class="content">
-            <div class="card glass">
-                <h2>Status Sistem</h2>
-                <p id="status-text" class="status-online">● 100% Valid & Sinkron</p>
-                <button id="action-btn" class="btn-gold">🚀 Eksekusi Perintah</button>
+    <!-- Top Navbar -->
+    <header class="h-14 bg-[#16181d] border-b border-gray-800 flex items-center justify-between px-4">
+        <div class="flex items-center space-x-3">
+            <span class="text-xl font-extrabold bg-gradient-to-r from-yellow-400 to-amber-200 bg-clip-text text-transparent">KINEWEB PRO 🎬</span>
+            <span class="text-xs bg-gray-800 px-2 py-1 rounded text-gray-400">v12.0 Gold</span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="bg-gray-800 hover:bg-gray-700 px-3 py-1.5 rounded-lg text-sm font-semibold transition">Project</button>
+            <button onclick="alert('Rendering Video...')" class="bg-gradient-to-r from-yellow-500 to-amber-600 text-black px-4 py-1.5 rounded-lg text-sm font-extrabold hover:opacity-90 transition shadow-lg shadow-yellow-500/20">Export ⚡</button>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="flex-1 flex overflow-hidden">
+
+        <!-- Left Sidebar: Assets / Media -->
+        <aside class="w-64 bg-[#121318] border-r border-gray-800 flex flex-col p-3 space-y-4">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Media Assets</h3>
+            <label class="border-2 border-dashed border-gray-700 hover:border-yellow-500 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer transition group">
+                <span class="text-2xl mb-1 group-hover:scale-110 transition">📁</span>
+                <span class="text-xs text-gray-400 text-center">Upload Video / Audio / Image</span>
+                <input type="file" class="hidden" multiple accept="video/*,audio/*,image/*">
+            </label>
+            <div class="flex-1 overflow-y-auto space-y-2">
+                <div class="bg-gray-800/50 p-2 rounded-lg text-xs text-gray-400 text-center">Belum ada asset ditambahkan</div>
+            </div>
+        </aside>
+
+        <!-- Center: Preview Screen -->
+        <main class="flex-1 bg-black flex flex-col items-center justify-center relative p-4">
+            <div class="w-full max-w-3xl aspect-video bg-[#0a0a0c] rounded-xl border border-gray-800 flex items-center justify-center relative shadow-2xl overflow-hidden">
+                <video id="previewPlayer" class="w-full h-full object-contain hidden"></video>
+                <div id="placeholderText" class="text-gray-600 text-sm font-medium">Preview Layar Utama</div>
+            </div>
+            <!-- Playback Controls -->
+            <div class="flex items-center space-x-6 mt-4">
+                <button class="text-gray-400 hover:text-white">⏮️</button>
+                <button class="w-10 h-10 bg-yellow-500 text-black rounded-full flex items-center justify-center font-bold hover:scale-105 transition">▶</button>
+                <button class="text-gray-400 hover:text-white">⏭️</button>
             </div>
         </main>
 
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active">🏠 Home</a>
-            <a href="#" class="nav-item">📊 Stats</a>
-            <a href="#" class="nav-item">⚙️ Settings</a>
-        </nav>
+        <!-- Right Sidebar: Effects & Adjustments -->
+        <aside class="w-72 bg-[#121318] border-l border-gray-800 p-3 space-y-4">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Layer Properties</h3>
+            <div class="space-y-3 text-sm">
+                <div>
+                    <label class="text-xs text-gray-400">Opacity</label>
+                    <input type="range" class="w-full accent-yellow-500" min="0" max="100" value="100">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-400">Speed</label>
+                    <select class="w-full bg-gray-800 border border-gray-700 rounded p-1.5 text-xs">
+                        <option>1.0x (Normal)</option>
+                        <option>1.5x Fast</option>
+                        <option>0.5x Slow-Mo</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
     </div>
 
-    <script src="script.js"></script>
+    <!-- Bottom: Multi-Track Timeline -->
+    <footer class="h-44 bg-[#16181d] border-t border-gray-800 flex flex-col p-2 space-y-2">
+        <div class="flex justify-between items-center px-2">
+            <span class="text-xs font-bold text-gray-400">TIMELINE MULTI-TRACK 🎞️</span>
+            <div class="space-x-2 text-xs">
+                <button class="bg-gray-800 px-2 py-1 rounded text-yellow-400">+ Video Track</button>
+                <button class="bg-gray-800 px-2 py-1 rounded text-cyan-400">+ Audio Track</button>
+            </div>
+        </div>
+        <div class="flex-1 bg-black/40 rounded-lg border border-gray-800/80 p-2 space-y-2 overflow-x-auto">
+            <div class="timeline-track h-10 rounded border border-gray-700/50 flex items-center px-2 text-xs text-gray-400">Track 1: [ Video Layer Utama ]</div>
+            <div class="timeline-track h-10 rounded border border-gray-700/50 flex items-center px-2 text-xs text-gray-400">Track 2: [ Audio / BGM ]</div>
+        </div>
+    </footer>
+
 </body>
-</html>
+    </html>
